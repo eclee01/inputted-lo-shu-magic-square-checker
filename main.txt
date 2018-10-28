@@ -1,0 +1,138 @@
+#include <iostream>
+#include <string>
+
+bool check(int [3][3]);
+
+int main()
+{
+    int square[3][3];
+    bool truth;
+    std::string confirm = "blah";
+    
+    std::cout << "Enter a 3x3 square of numbers 1-9!\n";
+    std::cout << "Don't repeat numbers!\n\n";
+    
+    while (confirm != "y") {
+        
+        confirm = "blah";
+        
+        //input square
+        for (int row = 0; row < 3; row++)
+        {
+            for (int col = 0; col < 3; col++)
+            {
+                std::cout << "Row " << row + 1;
+                std:: cout << ", Col " << col + 1 << ": ";
+                std::cin >> square[row][col];
+            }
+            std::cout << std::endl;
+        }
+    
+        //print square
+        for (int row = 0; row < 3; row++)
+        {
+            for (int col = 0; col < 3; col++)
+            {
+                std::cout << square[row][col] << " ";
+            }
+            std::cout << std::endl;
+        }
+        
+        while (confirm != "y" && confirm != "n")
+        {
+            std::cout << "\nIs this your square? (y/n) ";
+            std::cin >> confirm;
+            std::cout << std::endl;
+        }
+    
+    }
+    
+    truth = check(square);
+    
+    if (truth == true)
+    {
+        std::cout << "This is a Lo Shu magic square...!\n";
+        std::cout << "The magic is found...";
+    }
+    else if (truth == false)
+    {
+        std::cout << "This is not a Lo Shu magic square...\n";
+        std::cout << "The magic is lost...";
+    }
+    
+    return 0;
+}
+
+bool check(int array[3][3])
+{
+    int num[9];
+    int sum = 0, x;
+    
+    //check for repeating numbers
+    for (int row = 0; row < 3; row++)
+    {
+        for (int col = 0; col < 3; col++)
+        {
+            x = array[row][col];
+            if (num[x] == 1)
+            {
+                std::cout << "There are repeating numbers.." << std::endl;
+                return false;
+            }
+            num[x] = 1;
+        }
+    }    
+    
+    //check if rows add to 15
+    for (int row = 0; row < 3; row++)
+    {
+        sum = 0;
+        for (int col = 0; col < 3; col++)
+        {
+            sum += array[row][col];
+        }
+        if (sum != 15)
+        {
+            return false;
+        }
+    }
+    
+    //check if cols add to 15
+    for (int col = 0; col < 3; col++)
+    {
+        sum = 0;
+        for (int row = 0; row < 3; row++)
+        {
+            sum += array[row][col];
+        }
+        if (sum != 15)
+        {
+            return false;
+        }
+    }
+    
+    sum = 0;
+    //check if diagonals add to 15
+    for (int count = 0; count < 3; count++)
+    {
+        sum += array[count][count];
+    }
+    
+    if (sum != 15)
+    {
+        return false;
+    }
+    
+    sum = 0;
+    for (int x = 0; x < 3; x++)
+    {
+        sum += array[x][2 - x];
+    }
+    
+    if (sum != 15)
+    {
+        return false;
+    }
+    
+    return true;
+}
